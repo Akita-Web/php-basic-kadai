@@ -9,45 +9,30 @@
 <body>
     <p>
         <?php
-        // Step1. 独自のソート関数を作る
-        function sort_2way(&$array, $order) {
-        // 配列の要素数を取得
-        $count = count($array);
-
-        // バブルソートで実装
-        for ($i = 0; $i < $count - 1; $i++) {
-            for ($j = 0; $j < $count - $i - 1; $j++) {
-                // 昇順の場合
-                if ($order === true) {
-                    if ($array[$j] > $array[$j + 1]) {
-                        // 値を入れ替え
-                        $temp = $array[$j];
-                        $array[$j] = $array[$j + 1];
-                        $array[$j + 1] = $temp;
-                    }
-                } else { 
-                    // 降順の場合
-                    if ($array[$j] < $array[$j + 1]) {
-                        $temp = $array[$j];
-                        $array[$j] = $array[$j + 1];
-                        $array[$j + 1] = $temp;
-                    }
-                }
+        // Step1. 独自のソート関数：標準関数で実装（戻り値なし・値渡し）
+        function sort_2way($array, $order) {
+            // TRUEなら昇順、TRUE以外は降順として扱う
+            if ($order === true) {
+                sort($array);   // 昇順
+                echo "【昇順ソート】<br>";
+            } else {
+                rsort($array);  // 降順
+                echo "【降順ソート】<br>";
             }
+
+            // foreachで1行ずつ表示
+            foreach ($array as $value) {
+                echo $value . "<br>";
+            }
+            echo "<hr>"; // 区切り（任意）
         }
-    }         
 
-    // Step2. ソート対象の配列を用意する
-    $nums = [15, 4, 18, 23, 10];
+        // Step2. ソート対象の配列を用意
+        $nums = [15, 4, 18, 23, 10];
 
-    // Step3. 昇順ソート
-    sort_2way($nums, true);
-    echo "昇順ソート結果: " . implode(", ", $nums) . "<br>";
-
-    // Step3. 降順ソート
-    $nums = [15, 4, 18, 23, 10]; // 元の配列に戻す
-    sort_2way($nums, false);
-    echo "降順ソート結果: " . implode(", ", $nums) . "<br>";
+        // Step3. 昇順 → 降順 の順で呼び出し   
+        sort_2way($nums, true);   // 昇順
+        sort_2way($nums, false);  // 降順
         ?>
     </p>
 </body>
